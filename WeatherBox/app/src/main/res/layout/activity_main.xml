@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,24 +7,337 @@
     tools:context="at.talentehaus.weatherbox.MainActivity">
 
     <TextView
+        android:id="@+id/textViewIndoor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Indoorstation"
+        android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp" />
+        android:id="@+id/textViewOutoor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewCurrentTemperature1"
+        android:text="Outdoorstation"
+        android:textSize="20dp" />
+
+    <!-- Indoorstation Data -->
+
+    <TextView
+        android:id="@+id/textViewTemperature1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewIndoor"
+        android:text="Temperatur"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/textViewHumidity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewIndoor"
+        android:layout_centerHorizontal="true"
+        android:text="Feuchtigkeit"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/textViewPressure1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textViewHumidity1"
+        android:text="Luftdruck"
+        android:textSize="16dp" />
+
+    <ProgressBar
+        android:id="@+id/progressbarTemperature1"
+        style="@style/Widget.ProgressBar.Temperature"
+        android:layout_width="12dip"
+        android:layout_height="200dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewTemperature1"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        android:max="80"
+        android:progress="40" />
+
+    <ProgressBar
+        android:id="@+id/progressbarHumidity1"
+        style="@style/Widget.ProgressBar.Humidity"
+        android:layout_width="12dip"
+        android:layout_height="200dip"
+        android:layout_below="@+id/textViewHumidity1"
+        android:layout_centerHorizontal="true"
+        android:max="100"
+        android:progress="50" />
+
+    <ProgressBar
+        android:id="@+id/progressbarPressure1"
+        style="@style/Widget.ProgressBar.Pressure"
+        android:layout_width="12dip"
+        android:layout_height="200dip"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewPressure1"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:max="400"
+        android:progress="200" />
+
+    <!-- Outdoorstation Data -->
+
+    <TextView
+        android:id="@+id/textViewTemperature2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewOutoor"
+        android:text="Temperatur"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/textViewHumidity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewOutoor"
+        android:layout_centerHorizontal="true"
+        android:text="Feuchtigkeit"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/textViewPressure2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewHumidity2"
+        android:layout_alignBottom="@+id/textViewHumidity2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Luftdruck"
+        android:textSize="16dp" />
+
+    <ProgressBar
+        android:id="@+id/progressbarTemperature2"
+        style="@style/Widget.ProgressBar.Temperature"
+        android:layout_width="12dip"
+        android:layout_height="200dip"
+        android:layout_alignLeft="@+id/progressbarTemperature1"
+        android:layout_alignStart="@+id/progressbarTemperature1"
+        android:layout_below="@+id/textViewTemperature2"
+        android:max="80"
+        android:progress="40" />
+
+    <ProgressBar
+        android:id="@+id/progressbarHumidity2"
+        style="@style/Widget.ProgressBar.Humidity"
+        android:layout_width="12dip"
+        android:layout_height="200dip"
+        android:layout_alignLeft="@+id/progressbarHumidity1"
+        android:layout_alignStart="@+id/progressbarHumidity1"
+        android:layout_alignTop="@+id/progressbarPressure2"
+        android:max="100"
+        android:progress="50" />
+
+    <ProgressBar
+        android:id="@+id/progressbarPressure2"
+        style="@style/Widget.ProgressBar.Pressure"
+        android:layout_width="12dip"
+        android:layout_height="200dip"
+        android:layout_alignLeft="@+id/progressbarPressure1"
+        android:layout_alignStart="@+id/progressbarPressure1"
+        android:layout_alignTop="@+id/progressbarTemperature2"
+        android:max="400"
+        android:progress="200" />
+
+    <!-- Temperaturee Min/Max Values -->
+    <TextView
+        android:id="@+id/textViewTemperaturee1top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTemperature1"
+        android:layout_toEndOf="@+id/progressbarTemperature1"
+        android:layout_toRightOf="@+id/progressbarTemperature1"
+        android:text="50°C" />
+
+    <TextView
+        android:id="@+id/textViewTemperaturee1bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewCurrentTemperature1"
+        android:layout_toEndOf="@+id/progressbarTemperature1"
+        android:layout_toRightOf="@+id/progressbarTemperature1"
+        android:text="-30°C" />
+
+    <TextView
+        android:id="@+id/textViewTemperaturee2top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTemperature2"
+        android:layout_toEndOf="@+id/progressbarTemperature2"
+        android:layout_toRightOf="@+id/progressbarTemperature2"
+        android:text="50°C" />
+
+    <TextView
+        android:id="@+id/textViewTemperaturee2bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressbarTemperature2"
+        android:layout_toEndOf="@+id/progressbarTemperature2"
+        android:layout_toRightOf="@+id/progressbarTemperature2"
+        android:text="-30°C" />
+
+    <!-- Humidity Min/Max Values -->
+
+    <TextView
+        android:id="@+id/textViewHumidity1top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewHumidity1"
+        android:layout_toEndOf="@+id/progressbarHumidity1"
+        android:layout_toRightOf="@+id/progressbarHumidity1"
+        android:text="100%" />
+
+    <TextView
+        android:id="@+id/textViewHumidity1bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressbarHumidity1"
+        android:layout_toEndOf="@+id/progressbarHumidity1"
+        android:layout_toRightOf="@+id/progressbarHumidity1"
+        android:text="0%" />
+
+    <TextView
+        android:id="@+id/textViewHumidity2top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewHumidity2"
+        android:layout_toEndOf="@+id/progressbarHumidity2"
+        android:layout_toRightOf="@+id/progressbarHumidity2"
+        android:text="100%" />
+
+    <TextView
+        android:id="@+id/textViewHumidity2bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressbarHumidity2"
+        android:layout_toEndOf="@+id/progressbarHumidity2"
+        android:layout_toRightOf="@+id/progressbarHumidity2"
+        android:text="0%" />
+
+    <!-- Pressure Min/Max Values -->
+
+    <TextView
+        android:id="@+id/textViewPressure1top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewPressure1"
+        android:layout_toLeftOf="@+id/progressbarPressure1"
+        android:layout_toStartOf="@+id/progressbarPressure1"
+        android:text="1100hPa" />
+
+    <TextView
+        android:id="@+id/textViewPressure1bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressbarPressure1"
+        android:layout_toLeftOf="@+id/progressbarPressure1"
+        android:layout_toStartOf="@+id/progressbarPressure1"
+        android:text="700hPa" />
+
+    <TextView
+        android:id="@+id/textViewPressure2top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewPressure2"
+        android:layout_toLeftOf="@+id/progressbarPressure2"
+        android:layout_toStartOf="@+id/progressbarPressure2"
+        android:text="1100hPa" />
+
+    <TextView
+        android:id="@+id/textViewPressure2bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressbarPressure2"
+        android:layout_toLeftOf="@+id/progressbarPressure2"
+        android:layout_toStartOf="@+id/progressbarPressure2"
+        android:text="700hPa" />
+
+    <!-- Current Values -->
+
+    <TextView
+        android:id="@+id/textViewCurrentTemperature1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textViewTemperaturee2top"
+        android:layout_alignRight="@+id/textViewTemperaturee2top"
+        android:layout_below="@+id/progressbarTemperature1"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:text="40°C" />
+
+    <TextView
+        android:id="@+id/textViewCurrentTemperature2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewCurrentTemperature1"
+        android:layout_alignStart="@+id/textViewCurrentTemperature1"
+        android:layout_below="@+id/progressbarTemperature2"
+        android:text="40°C" />
+
+    <TextView
+        android:id="@+id/textViewCurrentHumidity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewCurrentHumidity2"
+        android:layout_alignStart="@+id/textViewCurrentHumidity2"
+        android:layout_below="@+id/textViewHumidity1bottom"
+        android:text="50%" />
+
+    <TextView
+        android:id="@+id/textViewCurrentHumidity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressbarHumidity2"
+        android:layout_centerHorizontal="true"
+        android:text="50%" />
+
+    <TextView
+        android:id="@+id/textViewCurrentPressure1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewCurrentPressure2"
+        android:layout_alignStart="@+id/textViewCurrentPressure2"
+        android:layout_below="@+id/progressbarPressure1"
+        android:text="900hPa" />
+
+    <TextView
+        android:id="@+id/textViewCurrentPressure2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/progressbarPressure2"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:text="900hPa" />
+
+    <!-- Update Button -->
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="clicked"
-        android:text="Make Request" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="updateData"
+        android:text="Update" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -1,81 +1,110 @@
 package at.talentehaus.weatherbox;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import org.json.JSONObject;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
-import java.util.Map;
+import static at.talentehaus.weatherbox.ServerRequest.queryYoungestRawValues;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String SET_COOKIE_KEY = "Set-Cookie";
-    private static final String COOKIE_KEY = "Cookie";
-    private static final String SESSION_COOKIE = "sessionid";
+    ProgressBar progressBarTemperature1;
+    ProgressBar progressBarTemperature2;
+    TextView textViewCurrentTemperature1;
+    TextView textViewCurrentTemperature2;
 
-    private static MainActivity _instance;
-    private RequestQueue _requestQueue;
-    private SharedPreferences _preferences;
+    ProgressBar progressBarHumidity1;
+    ProgressBar progressBarHumidity2;
+    TextView textViewCurrentHumidity1;
+    TextView textViewCurrentHumidity2;
 
-    public static MainActivity get() {
-        return _instance;
-    }
+    ProgressBar progressBarPressure1;
+    ProgressBar progressBarPressure2;
+    TextView textViewCurrentPressure1;
+    TextView textViewCurrentPressure2;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        _instance = this;
-        _preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        _requestQueue = Volley.newRequestQueue(this);
+
+        progressBarTemperature1 = (ProgressBar) findViewById(R.id.progressbarTemperature1);
+        progressBarTemperature2 = (ProgressBar) findViewById(R.id.progressbarTemperature2);
+        textViewCurrentTemperature1 = findViewById(R.id.textViewCurrentTemperature1);
+        textViewCurrentTemperature2 = findViewById(R.id.textViewCurrentTemperature2);
+
+        progressBarHumidity1 = (ProgressBar) findViewById(R.id.progressbarHumidity1);
+        progressBarHumidity2 = (ProgressBar) findViewById(R.id.progressbarHumidity2);
+        textViewCurrentHumidity1 = findViewById(R.id.textViewCurrentHumidity1);
+        textViewCurrentHumidity2 = findViewById(R.id.textViewCurrentHumidity2);
+
+        progressBarPressure1 = (ProgressBar) findViewById(R.id.progressbarPressure1);
+        progressBarPressure2 = (ProgressBar) findViewById(R.id.progressbarPressure2);
+        textViewCurrentPressure1 = findViewById(R.id.textViewCurrentPressure1);
+        textViewCurrentPressure2 = findViewById(R.id.textViewCurrentPressure2);
+
     }
 
-    public RequestQueue getRequestQueue() {
-        return _requestQueue;
+    public void updateData(View view) {
+        String serverdata1 = ServerRequest.queryYoungestRawValues();
+        String serverdata2 = ServerRequest.queryYoungestRawValues();
+
+        String[] parts1 = serverdata1.split(",");
+        String[] parts2 = serverdata2.split(",");
+
+        setTemperature(true, Integer.parseInt(parts1[0]));
+        setHumidity(true, Integer.parseInt(parts1[1]));
+        setPressure(true, Integer.parseInt(parts1[2]));
+        setTemperature(false, Integer.parseInt(parts2[0]));
+        setHumidity(false, Integer.parseInt(parts2[1]));
+        setPressure(false, Integer.parseInt(parts2[2]));
     }
 
-
-    /**
-     * Checks the response headers for session cookie and saves it
-     * if it finds it.
-     * @param headers Response Headers.
-     */
-    public final void checkSessionCookie(Map<String, String> headers) {
-        if (headers.containsKey(SET_COOKIE_KEY)
-                && headers.get(SET_COOKIE_KEY).startsWith(SESSION_COOKIE)) {
-            String cookie = headers.get(SET_COOKIE_KEY);
-            if (cookie.length() > 0) {
-                String[] splitCookie = cookie.split(";");
-                String[] splitSessionId = splitCookie[0].split("=");
-                cookie = splitSessionId[1];
-                SharedPreferences.Editor prefEditor = _preferences.edit();
-                prefEditor.putString(SESSION_COOKIE, cookie);
-                prefEditor.commit();
-            }
+    //Indoor == false, Outdoor == true
+    private void setTemperature(boolean Outdoor, double value) {
+        if (value < -30) {
+            value = -30;
+        } else if (value > 50) {
+            value = 50;
+        }
+        if (Outdoor) {
+            progressBarTemperature2.setProgress((int) value + 30);
+            textViewCurrentTemperature2.setText(value + "°C");
+        } else {
+            progressBarTemperature1.setProgress((int) value + 30);
+            textViewCurrentTemperature1.setText(value + "°C");
         }
     }
 
-    /**
-     * Adds session cookie to headers if exists.
-     * @param headers
-     */
-    public final void addSessionCookie(Map<String, String> headers) {
-        String sessionId = _preferences.getString(SESSION_COOKIE, "");
-        if (sessionId.length() > 0) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(SESSION_COOKIE);
-            builder.append("=");
-            builder.append(sessionId);
-            if (headers.containsKey(COOKIE_KEY)) {
-                builder.append("; ");
-                builder.append(headers.get(COOKIE_KEY));
-            }
-            headers.put(COOKIE_KEY, builder.toString());
+    private void setHumidity(boolean Outdoor, double value) {
+        if (value < 0) {
+            value = 0;
+        } else if (value > 100) {
+            value = 100;
+        }
+        if (Outdoor) {
+            progressBarHumidity2.setProgress((int) value);
+            textViewCurrentHumidity2.setText(value + "%");
+        } else {
+            progressBarHumidity1.setProgress((int) value);
+            textViewCurrentHumidity1.setText(value + "%");
         }
     }
 
+    private void setPressure(boolean Outdoor, double value) {
+        if (value < 700) {
+            value = 700;
+        } else if (value > 1100) {
+            value = 1100;
+        }
+        if (Outdoor) {
+            progressBarPressure2.setProgress((int) value - 700);
+            textViewCurrentPressure2.setText(value + "hPa");
+        } else {
+            progressBarPressure1.setProgress((int) value - 700);
+            textViewCurrentPressure1.setText(value + "hPa");
+        }
+    }
 }
