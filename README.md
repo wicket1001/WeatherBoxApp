@@ -33,4 +33,4 @@ Der Code muss mittels Android Studio auf das Gerät hochgeladen werden.
 ## Autoren
 
 * **Harald Moritz** - *Hauptentwickler* - [Github](https://github.com/wicket1001)
-* **Rene Fischer** - *Graphische Darstellung*
+* **Rene Fischer** - *Graphische Darstellung* - [Github](https://github.com/RenoFischa)
